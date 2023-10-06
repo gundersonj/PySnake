@@ -1,7 +1,7 @@
 import pygame
 import random
 
-from .constants import BACKGROUNDS, FOOD
+from .constants import GAME_BACKGROUNDS, GAME_OVER_BACKGROUNDS, FOOD
 
 class Images:
     game_over: pygame.Surface
@@ -10,12 +10,15 @@ class Images:
     
     def __init__(self) -> None:
         self.game_over = pygame.image.load(
-            BACKGROUNDS[1]
+            GAME_OVER_BACKGROUNDS[0]
         ).convert_alpha()
-        self.background = pygame.image.load(
-            BACKGROUNDS[0]
-        ).convert_alpha()
+        self.randomize_background()
         self.randomize_food()
+
+    def randomize_background(self):
+        self.background = pygame.image.load(
+            random.choice(GAME_BACKGROUNDS)
+        ).convert_alpha()
         
     def randomize_food(self):
         self.food = pygame.image.load(

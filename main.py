@@ -2,6 +2,17 @@ import pygame
 import time
 import random
 
+# import tensorflow as tf
+# # import tflearn
+# from tflearn.layers.core import input_data, dropout, fully_connected
+# from tflearn.layers.estimator import regression
+# from statistics import mean, median
+# from collections import Counter
+# import numpy as np
+
+# define tensors
+
+
 from config.window import Window
 from config.images import Images
 
@@ -32,6 +43,21 @@ def increase_speed(speed, score):
     if score % 4 == 0 and score != 0:
         speed += 1
     return speed
+
+def high_scores(score):
+    with open("high_scores.txt", "r") as f:
+        high_scores = f.read()
+    if int(score) > int(high_scores):
+        with open("high_scores.txt", "w") as f:
+            f.write(str(score))
+    with open("high_scores.txt", "r") as f:
+        high_scores = f.read()
+    return high_scores
+
+def high_score_board(score):
+    high_score = high_scores(score)
+    value = score_font.render("High Score: " + str(high_score), True, BLACK)
+    window.blit(value, [0, 30])
 
 def score_board(score):
     value = score_font.render("Score: " + str(score), True, BLACK)
@@ -74,7 +100,6 @@ def game_loop():
     food_y = round(random.randrange(0, window_height - snake_size) / snake_size) * snake_size
 
     food = Images().food
-    # grapes = pygame.image.load("grapes.png")
     food = pygame.transform.scale(food, (snake_size, snake_size))
 
     while not game_over:
@@ -83,6 +108,7 @@ def game_loop():
             window.blit(game_over_background, (0, 0))
             message("You lost!    Q: Quit C: Play Again", RED)
             score_board(snake_length - 1)
+            high_score_board(snake_length - 1)
             pygame.display.update()
 
             for event in pygame.event.get():
