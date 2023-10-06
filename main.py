@@ -75,6 +75,7 @@ def snake(snake_size, snake_list):
                 snake_size,
                 snake_size,
             ],
+            border_radius=2,
         )
 
 def message(msg, color):
