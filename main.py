@@ -1,6 +1,7 @@
 import pygame
 import time
 import random
+import asyncio
 
 # import tensorflow as tf
 # # import tflearn
